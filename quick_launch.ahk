@@ -24,9 +24,9 @@ RunActivateOrSwitchTitle(Target, WinTitle = "")
       SetTitleMatchMode, 2
       WinWait, %WinTitle%, , 3
       IfWinActive, %WinTitle%
-		WinActivateBottom, %WinTitle%
+		    WinActivateBottom, %WinTitle%
       Else
-		WinActivate, %WinTitle%
+		    WinActivate, %WinTitle%
    }
    Else
    {
@@ -34,7 +34,7 @@ RunActivateOrSwitchTitle(Target, WinTitle = "")
       IfWinActive, ahk_class %ClassID%
         WinActivateBottom, ahk_class %ClassID%
       Else
-		WinActivate, ahk_class %ClassID%
+		    WinActivate, ahk_class %ClassID%
    }
 }
 
@@ -80,13 +80,18 @@ RunActivateOrSwitchTitle("C:\Program Files\WindowsApps\SpotifyAB.SpotifyMusic_1.
 Return
 
 ; Launch VSCode
-^+#v:: ; Spotify
+^+#v::
 RunActivateOrSwitchTitle("C:\Users\ztome\AppData\Local\Programs\Microsoft VS Code\Code.exe", "Visual Studio Code")
 Return
 
 ; Launch Chrome
 ^+#w:: ; Chrome
 RunActivateOrSwitchTitle("C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", "Google Chrome")
+Return
+
+; Launch WhatsApp
+^+#r:: ;
+RunActivateOrSwitchTitle("C:\Program Files\WindowsApps\5319275A.WhatsAppDesktop_2.2222.12.0_x64__cv1g1gvanyjgm\app\WhatsApp.exe", "WhatsApp")
 Return
 
 ; Notion
