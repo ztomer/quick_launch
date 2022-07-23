@@ -1,4 +1,4 @@
-RunActivateOrSwitch(Target, WinTitle = "")
+RunActivateOrSwitchTitle(Target, WinTitle = "")
 {
    ; Get the filename without a path
    SplitPath, Target, TargetNameOnly
@@ -38,6 +38,25 @@ RunActivateOrSwitch(Target, WinTitle = "")
    }
 }
 
+; Function that either activates the window, if it exists or
+; launches the exe given
+RunActivateOrSwitchProcess(exeName, name, windowType:="max")
+{
+  WinGet, currProcessPath, ProcessPath, A
+  if (currProcessPath = exeName)
+    WinMinimize, A
+  else
+  {
+    exist := WinExist(name)
+    if %exist%
+      WinActivate, %name%
+    else
+      if (windowType = "-")
+        Run %exeName%
+      else
+        Run, %exeName%,, max
+  }
+}
 
 ; Example for running a website
 ; ^+!F:: ;Facebook
@@ -47,25 +66,30 @@ RunActivateOrSwitch(Target, WinTitle = "")
 ; Launching Firefox
 ^+#f:: ;Firefox
 ;Run C:\Program Files\Mozilla Firefox\firefox.exe
-RunActivateOrSwitch("C:\Program Files\Mozilla Firefox\firefox.exe", "Mozilla Firefox")
+RunActivateOrSwitchTitle("C:\Program Files\Mozilla Firefox\firefox.exe", "Firefox")
 Return
 
 ; Launch Cron
 ^+#c:: ;Cron
-RunActivateOrSwitch("C:\Users\ztome\AppData\Local\Programs\cron\Cron.exe", "Cron")
+RunActivateOrSwitchTitle("C:\Users\ztome\AppData\Local\Programs\cron\Cron.exe", "Cron")
 Return
 
 ; Launch Spotify
 ^+#s:: ; Spotify
-RunActivateOrSwitch("C:\Program Files\WindowsApps\SpotifyAB.SpotifyMusic_1.190.859.0_x86__zpdnekdrzrea0\Spotify.exe", "Spotify")
+RunActivateOrSwitchTitle("C:\Program Files\WindowsApps\SpotifyAB.SpotifyMusic_1.190.859.0_x86__zpdnekdrzrea0\Spotify.exe", "Spotify")
 Return
 
 ; Launch VSCode
 ^+#v:: ; Spotify
-RunActivateOrSwitch("C:\Users\ztome\AppData\Local\Programs\Microsoft VS Code\Code.exe", "Visual Studio Code")
+RunActivateOrSwitchTitle("C:\Users\ztome\AppData\Local\Programs\Microsoft VS Code\Code.exe", "Visual Studio Code")
 Return
 
 ; Launch Chrome
 ^+#w:: ; Chrome
-RunActivateOrSwitch("C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", "Google Chrome")
+RunActivateOrSwitchTitle("C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", "Google Chrome")
+Return
+
+; Notion
+^+#a::
+RunActivateOrSwitchProcess("C:\Users\ztome\AppData\Local\Programs\Notion\Notion.exe", "Notion")
 Return
