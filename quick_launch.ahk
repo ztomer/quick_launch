@@ -89,6 +89,37 @@ SwitchToWindowsTerminal()
   }
 }
 
+SwitchToWindowsName(name)
+{
+  ; TODO: merge SwitchToWindowsTerminal with RunActiveteOrSwitchProcess
+  windowHandleId := WinExist("ahk_exe %name%")
+  windowExistsAlready := windowHandleId > 0
+
+  ; If the Windows Terminal is already open, determine if we should put it in focus or minimize it.
+  if (windowExistsAlready = true)
+  {
+    activeWindowHandleId := WinExist("A")
+    windowIsAlreadyActive := activeWindowHandleId == windowHandleId
+
+    if (windowIsAlreadyActive)
+    {
+      ; Minimize the window.
+      WinMinimize, "ahk_id %windowHandleId%"
+    }
+    else
+    {
+      ; Put the window in focus.
+      WinActivate, "ahk_id %windowHandleId%"
+      WinShow, "ahk_id %windowHandleId%"
+    }
+  }
+  ; Else it's not already open, so launch it.
+  else
+  {
+    Run, wt
+  }
+}
+
 ; Example for running a website
 ; ^+!F:: ;Facebook
 ; Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe facebook.com
@@ -132,4 +163,8 @@ Return
 
 ; Launch WhatsApp
 ^+#q::SwitchToWindowsTerminal()
+Return
+
+^+#g::
+RunActivateOrSwitchProcess("C:\Program Files\WindowsApps\Microsoft.WindowsAlarms_11.2205.23.0_x64__8wekyb3d8bbwe\Time.exe", "Clock")
 Return
