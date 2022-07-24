@@ -125,6 +125,10 @@ SwitchToWindowsName(name)
 ; Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe facebook.com
 ; Return
 
+
+; ^ - Control
+; + - Shift
+; # - Win key
 ; Launching Firefox
 ^+#f:: ;Firefox
 ;Run C:\Program Files\Mozilla Firefox\firefox.exe
