@@ -11,31 +11,43 @@ RunActivateOrSwitchTitle(Target, WinTitle = "")
       PID = %ErrorLevel%
       WinGetClass, ClassID, ahk_pid %PID%
    }
-   ; Run the program if the process is not already running
-   Else
+   Else ; Run the program if the process is not already running
+   {
       Run, %Target%, , , PID
+      Return
+   }
+
+
+  ; If the active window is focues, minimize it
+  WinGetTitle, active_title, A
+  MsgBox, %active_title%
+  if ( WinTitle == active_title )
+  {
+    WinMinimize A
+    Return
+  }
 
    ; At least one app  wouldn't always become the active
    ; window after using Run, so we always force a window activate.
    ; Activate by title if given, otherwise use class ID. Activating by class ID
    ; appears more robust for switching than using PID.
-   If WinTitle <>
-   {
-      SetTitleMatchMode, 2
-      WinWait, %WinTitle%, , 3
-      IfWinActive, %WinTitle%
-		    WinActivateBottom, %WinTitle%
-      Else
-		    WinActivate, %WinTitle%
-   }
-   Else
-   {
-      WinWait, ahk_class %ClassID%, , 3
-      IfWinActive, ahk_class %ClassID%
-        WinActivateBottom, ahk_class %ClassID%
-      Else
-		    WinActivate, ahk_class %ClassID%
-   }
+  If WinTitle <>
+  {
+    SetTitleMatchMode, 2
+    WinWait, %WinTitle%, , 3
+    IfWinActive, %WinTitle%
+      WinActivateBottom, %WinTitle%
+    Else
+      WinActivate, %WinTitle%
+  }
+  Else
+  {
+    WinWait, ahk_class %ClassID%, , 3
+    IfWinActive, ahk_class %ClassID%
+      WinActivateBottom, ahk_class %ClassID%
+    Else
+      WinActivate, ahk_class %ClassID%
+  }
 }
 
 ; Function that either activates the window, if it exists or
@@ -44,18 +56,24 @@ RunActivateOrSwitchProcess(exeName, name, windowType:="max")
 {
   WinGet, currProcessPath, ProcessPath, A
   if (currProcessPath = exeName)
-    WinMinimize, A
-  else
   {
-    exist := WinExist(name)
-    if %exist%
-      WinActivate, %name%
-    else
-      if (windowType = "-")
-        Run %exeName%
-      else
-        Run, %exeName%,, max
+    WinMinimize, A
+    Return
   }
+
+  SetTitleMatchMode, 3
+  exist := WinExist(name)
+  if %exist%
+  {
+    WinActivate, %name%
+    Return
+  }
+
+  if (windowType = "-")
+    Run %exeName%
+  else
+    Run, %exeName%,, max
+
 }
 
 SwitchToWindowsTerminal()
@@ -120,29 +138,58 @@ SwitchToWindowsName(name)
   }
 }
 
-; Example for running a website
-; ^+!F:: ;Facebook
-; Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe facebook.com
-; Return
 
+RunActivateOrSwitchTitleWeb(url, name)
+{
+  ; Search for the webapp by title
+  SetTitleMatchMode, 3
+  WinWait, %name%, , 3
+  ; Open a new instance if there's no existing one
+  IfWinNotExist, %name%
+  {
+    Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe --new-window --app=%url%
+    Return
+  }
+
+  ; check the title of the current window, if its the the same as name, minimize
+  WinGetTitle, active_title, A
+  if ( name == active_title )
+  {
+    WinMinimize A
+    Return
+  }
+
+  ; Inactive window, focus
+  IfWinActive, %name%
+		WinActivateBottom, %name%
+  Else
+		WinActivate, %name%
+}
 
 ; ^ - Control
 ; + - Shift
 ; # - Win key
+
+; Example for running a website
+ ^+#t:: ;Cronometer
+ ;Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe --new-window --app=https://cronometer.com/
+ RunActivateOrSwitchTitleWeb("https://cronometer.com/", "Cronometer")
+ Return
+
 ; Launching Firefox
 ^+#f:: ;Firefox
 ;Run C:\Program Files\Mozilla Firefox\firefox.exe
-RunActivateOrSwitchTitle("C:\Program Files\Mozilla Firefox\firefox.exe", "Firefox")
+RunActivateOrSwitchTitle("C:\Program Files\Mozilla Firefox\firefox.exe", "Mozilla Firefox")
 Return
 
 ; Launch Cron
 ^+#c:: ;Cron
-RunActivateOrSwitchTitle("C:\Users\ztome\AppData\Local\Programs\cron\Cron.exe", "Cron")
+RunActivateOrSwitchProcess("C:\Users\ztome\AppData\Local\Programs\cron\Cron.exe", "Cron")
 Return
 
 ; Launch Spotify
 ^+#s:: ; Spotify
-RunActivateOrSwitchTitle("C:\Program Files\WindowsApps\SpotifyAB.SpotifyMusic_1.190.859.0_x86__zpdnekdrzrea0\Spotify.exe", "Spotify")
+RunActivateOrSwitchProcess("C:\Program Files\WindowsApps\SpotifyAB.SpotifyMusic_1.190.859.0_x86__zpdnekdrzrea0\Spotify.exe", "Spotify")
 Return
 
 ; Launch VSCode
@@ -157,7 +204,7 @@ Return
 
 ; Launch WhatsApp
 ^+#r:: ;
-RunActivateOrSwitchTitle("C:\Program Files\WindowsApps\5319275A.WhatsAppDesktop_2.2222.12.0_x64__cv1g1gvanyjgm\app\WhatsApp.exe", "WhatsApp")
+RunActivateOrSwitchTitle("C:\Program Files\WindowsApps\5319275A.WhatsAppDesktop_2.2226.5.0_x64__cv1g1gvanyjgm\app\WhatsApp.exe", "WhatsApp")
 Return
 
 ; Notion
