@@ -20,7 +20,6 @@ RunActivateOrSwitchTitle(Target, WinTitle = "")
 
   ; If the active window is focues, minimize it
   WinGetTitle, active_title, A
-  MsgBox, %active_title%
   if ( WinTitle == active_title )
   {
     WinMinimize A
@@ -107,37 +106,6 @@ SwitchToWindowsTerminal()
   }
 }
 
-SwitchToWindowsName(name)
-{
-  ; TODO: merge SwitchToWindowsTerminal with RunActiveteOrSwitchProcess
-  windowHandleId := WinExist("ahk_exe %name%")
-  windowExistsAlready := windowHandleId > 0
-
-  ; If the Windows Terminal is already open, determine if we should put it in focus or minimize it.
-  if (windowExistsAlready = true)
-  {
-    activeWindowHandleId := WinExist("A")
-    windowIsAlreadyActive := activeWindowHandleId == windowHandleId
-
-    if (windowIsAlreadyActive)
-    {
-      ; Minimize the window.
-      WinMinimize, "ahk_id %windowHandleId%"
-    }
-    else
-    {
-      ; Put the window in focus.
-      WinActivate, "ahk_id %windowHandleId%"
-      WinShow, "ahk_id %windowHandleId%"
-    }
-  }
-  ; Else it's not already open, so launch it.
-  else
-  {
-    Run, wt
-  }
-}
-
 
 RunActivateOrSwitchTitleWeb(url, name)
 {
@@ -166,6 +134,19 @@ RunActivateOrSwitchTitleWeb(url, name)
 		WinActivate, %name%
 }
 
+RunSpotify()
+{
+  WinGet, spotifyHwnd, ID, ahk_exe spotify.exe
+
+  If WinActive("ahk_id" spotifyHwnd){
+    WinMinimize A
+    Return
+  }
+  WinActivate, % "ahk_id " spotifyHwnd
+	Return
+}
+
+
 ; ^ - Control
 ; + - Shift
 ; # - Win key
@@ -189,7 +170,7 @@ Return
 
 ; Launch Spotify
 ^+#s:: ; Spotify
-RunActivateOrSwitchProcess("C:\Program Files\WindowsApps\SpotifyAB.SpotifyMusic_1.190.859.0_x86__zpdnekdrzrea0\Spotify.exe", "Spotify")
+RunSpotify()
 Return
 
 ; Launch VSCode
