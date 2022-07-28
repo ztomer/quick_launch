@@ -99,12 +99,11 @@ SwitchToWindowsTerminal()
       WinActivate, "ahk_id %windowHandleId%"
       WinShow, "ahk_id %windowHandleId%"
     }
+    Return
   }
+
   ; Else it's not already open, so launch it.
-  else
-  {
-    Run, wt
-  }
+  Run, wt
 }
 
 
