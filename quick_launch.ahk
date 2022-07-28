@@ -19,7 +19,6 @@ RunActivateOrSwitchTitle(Target, WinTitle = "")
    }
 
   ; If the active window is focues, minimize it
-
   WinGetTitle, active_title, A
   IfInString, active_title, %WinTitle%
   {
@@ -110,7 +109,7 @@ SwitchToWindowsTerminal()
 RunActivateOrSwitchTitleWeb(url, name)
 {
   ; Search for the webapp by title
-  SetTitleMatchMode, 3
+  SetTitleMatchMode, 2
   WinWait, %name%, , 3
   ; Open a new instance if there's no existing one
   IfWinNotExist, %name%
@@ -119,9 +118,19 @@ RunActivateOrSwitchTitleWeb(url, name)
     Return
   }
 
-  ; check the title of the current window, if its the the same as name, minimize
+
+
+; If the active window is focues, minimize it
   WinGetTitle, active_title, A
-  if ( name == active_title )
+  IfInString, active_title, %name%
+  {
+    WinMinimize A
+    Return
+  }
+
+  ; If the active window is focues, minimize it
+  WinGetTitle, active_title, A
+  IfInString, active_title, %name%
   {
     WinMinimize A
     Return
@@ -157,9 +166,14 @@ RunSpotify()
 ; # - Win key
 
 ; Example for running a website
- ^+#t:: ;Cronometer
- RunActivateOrSwitchTitleWeb("https://cronometer.com/", "Cronometer")
- Return
+^+#t:: ;Cronometer
+RunActivateOrSwitchTitleWeb("https://cronometer.com/", "Cronometer")
+Return
+
+; Launch Gmal
+^+#g::
+RunActivateOrSwitchTitleWeb("https://mail.google.com/mail/u/0/#inbox", " - Gmail")
+Return
 
 ; Launching Firefox
 ^+#f:: ;Firefox
@@ -201,7 +215,3 @@ Return
 ^+#q::SwitchToWindowsTerminal()
 Return
 
-; Launch CLock (Broken)
-^+#g::
-RunActivateOrSwitchProcess("C:\Program Files\WindowsApps\Microsoft.WindowsAlarms_11.2205.23.0_x64__8wekyb3d8bbwe\Time.exe", "Clock")
-Return
