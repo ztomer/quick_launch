@@ -3,6 +3,7 @@ RunActivateOrSwitchTitle(Target, WinTitle = "")
    ; Get the filename without a path
    SplitPath, Target, TargetNameOnly
 
+
    ; Process returns the PID of a matching process exists, or 0 otherwise
    Process, Exist, %TargetNameOnly%
    ; Get the PID and the class if the process is already running
@@ -17,10 +18,10 @@ RunActivateOrSwitchTitle(Target, WinTitle = "")
       Return
    }
 
-
   ; If the active window is focues, minimize it
+
   WinGetTitle, active_title, A
-  if ( WinTitle == active_title )
+  IfInString, active_title, %WinTitle%
   {
     WinMinimize A
     Return
@@ -140,7 +141,7 @@ RunSpotify()
   if ( spotifyHwnd = "" )
   {
     run "C:\Program Files\WindowsApps\SpotifyAB.SpotifyMusic_1.190.859.0_x86__zpdnekdrzrea0\Spotify.exe"
-    return
+    Return
   }
 
   If WinActive("ahk_id" spotifyHwnd){
@@ -158,7 +159,6 @@ RunSpotify()
 
 ; Example for running a website
  ^+#t:: ;Cronometer
- ;Run C:\Program Files (x86)\Google\Chrome\Application\chrome.exe --new-window --app=https://cronometer.com/
  RunActivateOrSwitchTitleWeb("https://cronometer.com/", "Cronometer")
  Return
 
@@ -198,10 +198,11 @@ Return
 RunActivateOrSwitchProcess("C:\Users\ztome\AppData\Local\Programs\Notion\Notion.exe", "Notion")
 Return
 
-; Launch WhatsApp
+; Launch Terminal
 ^+#q::SwitchToWindowsTerminal()
 Return
 
+; Launch CLock (Broken)
 ^+#g::
 RunActivateOrSwitchProcess("C:\Program Files\WindowsApps\Microsoft.WindowsAlarms_11.2205.23.0_x64__8wekyb3d8bbwe\Time.exe", "Clock")
 Return
