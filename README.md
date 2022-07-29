@@ -1,7 +1,14 @@
 # Quick launch
 
-Keyboard based application launcher - assign a hot key to launch or open specific applications or websites.
-Uses AutoHotKey and copy-pastes from across the web
+Keyboard based application shortcuts.
+Assign a hot key to launch or open specific applications or websites, no need to remember if the application was already launched.
+Focus on tasks rather then window management.
+
+Examples: 
+* Notion: to launch Notion, press Control+Shift+Win+A, Notion is launched and focused (if it was already running, the existing instance will be brought into focus). Pressing Control+Shift+Win+A again will minimize the Notion window. 
+* Gmail: to read email, press Control+Shift+Win+G. Gmail is launched in a window. Press Control+Shoft+Win+A again to minimize the window.
+
+Uses AutoHotKey and copy-pastes from across the web.
 
 Public domain
 
