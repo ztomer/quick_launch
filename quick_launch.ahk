@@ -181,6 +181,11 @@ Return
 RunActivateOrSwitchTitle("C:\Program Files\Mozilla Firefox\firefox.exe", "Mozilla Firefox")
 Return
 
+; Launching Double commander
+^+#d:: ;
+RunActivateOrSwitchTitle("C:\Program Files\Double Commander\doublecmd.exe", "Double Commander")
+Return
+
 ; Launch Cron
 ^+#c:: ;Cron
 RunActivateOrSwitchProcess("C:\Users\ztome\AppData\Local\Programs\cron\Cron.exe", "Cron")
