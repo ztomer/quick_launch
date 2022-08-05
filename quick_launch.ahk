@@ -1,22 +1,21 @@
 RunActivateOrSwitchTitle(Target, WinTitle = "")
 {
-   ; Get the filename without a path
-   SplitPath, Target, TargetNameOnly
+  ; Get the filename without a path
+  SplitPath, Target, TargetNameOnly
 
-
-   ; Process returns the PID of a matching process exists, or 0 otherwise
-   Process, Exist, %TargetNameOnly%
-   ; Get the PID and the class if the process is already running
-   If ErrorLevel > 0
-   {
-      PID = %ErrorLevel%
-      WinGetClass, ClassID, ahk_pid %PID%
-   }
-   Else ; Run the program if the process is not already running
-   {
-      Run, %Target%, , , PID
-      Return
-   }
+  ; Process returns the PID of a matching process exists, or 0 otherwise
+  Process, Exist, %TargetNameOnly%
+  ; Get the PID and the class if the process is already running
+  If ErrorLevel > 0
+  {
+    PID = %ErrorLevel%
+    WinGetClass, ClassID, ahk_pid %PID%
+  }
+  Else ; Run the program if the process is not already running
+  {
+    Run, %Target%, , , PID
+    Return
+  }
 
   ; If the active window is focues, minimize it
   WinGetTitle, active_title, A
@@ -26,10 +25,10 @@ RunActivateOrSwitchTitle(Target, WinTitle = "")
     Return
   }
 
-   ; At least one app  wouldn't always become the active
-   ; window after using Run, so we always force a window activate.
-   ; Activate by title if given, otherwise use class ID. Activating by class ID
-   ; appears more robust for switching than using PID.
+  ; At least one app  wouldn't always become the active
+  ; window after using Run, so we always force a window activate.
+  ; Activate by title if given, otherwise use class ID. Activating by class ID
+  ; appears more robust for switching than using PID.
   If WinTitle <>
   {
     SetTitleMatchMode, 2
@@ -105,7 +104,6 @@ SwitchToWindowsTerminal()
   Run, wt
 }
 
-
 RunActivateOrSwitchTitleWeb(url, name)
 {
   ; Search for the webapp by title
@@ -118,9 +116,7 @@ RunActivateOrSwitchTitleWeb(url, name)
     Return
   }
 
-
-
-; If the active window is focues, minimize it
+  ; If the active window is focues, minimize it
   WinGetTitle, active_title, A
   IfInString, active_title, %name%
   {
@@ -138,9 +134,9 @@ RunActivateOrSwitchTitleWeb(url, name)
 
   ; Inactive window, focus
   IfWinActive, %name%
-		WinActivateBottom, %name%
+    WinActivateBottom, %name%
   Else
-		WinActivate, %name%
+    WinActivate, %name%
 }
 
 RunSpotify()
@@ -157,28 +153,27 @@ RunSpotify()
     Return
   }
   WinActivate, % "ahk_id " spotifyHwnd
-	Return
+  Return
 }
-
 
 ; ^ - Control
 ; + - Shift
 ; # - Win key
 
 ; Example for running a website
-^+#t:: ;Cronometer
-RunActivateOrSwitchTitleWeb("https://cronometer.com/", "Cronometer")
+^+#q:: ;Cronometer
+  RunActivateOrSwitchTitleWeb("https://cronometer.com/", "Cronometer")
 Return
 
 ; Launch Gmal
 ^+#g::
-RunActivateOrSwitchTitleWeb("https://mail.google.com/mail/u/0/#inbox", " - Gmail")
+  RunActivateOrSwitchTitleWeb("https://mail.google.com/mail/u/0/#inbox", " - Gmail")
 Return
 
 ; Launching Firefox
 ^+#f:: ;Firefox
-;Run C:\Program Files\Mozilla Firefox\firefox.exe
-RunActivateOrSwitchTitle("C:\Program Files\Mozilla Firefox\firefox.exe", "Mozilla Firefox")
+  ;Run C:\Program Files\Mozilla Firefox\firefox.exe
+  RunActivateOrSwitchTitle("C:\Program Files\Mozilla Firefox\firefox.exe", "Mozilla Firefox")
 Return
 
 ; Launching Double commander
@@ -188,35 +183,35 @@ Return
 
 ; Launch Cron
 ^+#c:: ;Cron
-RunActivateOrSwitchProcess("C:\Users\ztome\AppData\Local\Programs\cron\Cron.exe", "Cron")
+  RunActivateOrSwitchProcess("C:\Users\ztome\AppData\Local\Programs\cron\Cron.exe", "Cron")
 Return
 
 ; Launch Spotify
 ^+#s:: ; Spotify
-RunSpotify()
+  RunSpotify()
 Return
 
 ; Launch VSCode
 ^+#v::
-RunActivateOrSwitchTitle("C:\Users\ztome\AppData\Local\Programs\Microsoft VS Code\Code.exe", "Visual Studio Code")
+  RunActivateOrSwitchTitle("C:\Users\ztome\AppData\Local\Programs\Microsoft VS Code\Code.exe", "Visual Studio Code")
 Return
 
 ; Launch Chrome
 ^+#w:: ; Chrome
-RunActivateOrSwitchTitle("C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", "Google Chrome")
+  RunActivateOrSwitchTitle("C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", "Google Chrome")
 Return
 
 ; Launch WhatsApp
 ^+#r:: ;
-RunActivateOrSwitchTitle("C:\Program Files\WindowsApps\5319275A.WhatsAppDesktop_2.2226.5.0_x64__cv1g1gvanyjgm\app\WhatsApp.exe", "WhatsApp")
+RunActivateOrSwitchTitle("C:\Program Files\WindowsApps\5319275A.WhatsAppDesktop_2.2226.6.0_x64__cv1g1gvanyjgm\app\WhatsApp.exe", "WhatsApp")
 Return
 
 ; Notion
 ^+#a::
-RunActivateOrSwitchProcess("C:\Users\ztome\AppData\Local\Programs\Notion\Notion.exe", "Notion")
+  RunActivateOrSwitchProcess("C:\Users\ztome\AppData\Local\Programs\Notion\Notion.exe", "Notion")
 Return
 
 ; Launch Terminal
-^+#q::SwitchToWindowsTerminal()
+^+#t::SwitchToWindowsTerminal()
 Return
 
