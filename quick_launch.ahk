@@ -144,7 +144,7 @@ RunSpotify()
   WinGet, spotifyHwnd, ID, ahk_exe spotify.exe
   if ( spotifyHwnd = "" )
   {
-    run "C:\Program Files\WindowsApps\SpotifyAB.SpotifyMusic_1.190.859.0_x86__zpdnekdrzrea0\Spotify.exe"
+    run "C:\Program Files\WindowsApps\SpotifyAB.SpotifyMusic_1.191.824.0_x86__zpdnekdrzrea0\Spotify.exe"
     Return
   }
 
