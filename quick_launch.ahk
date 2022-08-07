@@ -1,4 +1,4 @@
-RunActivateOrSwitchTitle(Target, WinTitle = "")
+ToggleByTitle(Target, WinTitle = "")
 {
   ; Get the filename without a path
   SplitPath, Target, TargetNameOnly
@@ -50,7 +50,7 @@ RunActivateOrSwitchTitle(Target, WinTitle = "")
 
 ; Function that either activates the window, if it exists or
 ; launches the exe given
-RunActivateOrSwitchProcess(exeName, name, windowType:="max")
+ToggleByProcess(exeName, name, windowType:="max")
 {
   WinGet, currProcessPath, ProcessPath, A
   if (currProcessPath = exeName)
@@ -74,37 +74,7 @@ RunActivateOrSwitchProcess(exeName, name, windowType:="max")
 
 }
 
-SwitchToWindowsTerminal()
-{
-  ; TODO: merge SwitchToWindowsTerminal with RunActiveteOrSwitchProcess
-  windowHandleId := WinExist("ahk_exe WindowsTerminal.exe")
-  windowExistsAlready := windowHandleId > 0
-
-  ; If the Windows Terminal is already open, determine if we should put it in focus or minimize it.
-  if (windowExistsAlready = true)
-  {
-    activeWindowHandleId := WinExist("A")
-    windowIsAlreadyActive := activeWindowHandleId == windowHandleId
-
-    if (windowIsAlreadyActive)
-    {
-      ; Minimize the window.
-      WinMinimize, "ahk_id %windowHandleId%"
-    }
-    else
-    {
-      ; Put the window in focus.
-      WinActivate, "ahk_id %windowHandleId%"
-      WinShow, "ahk_id %windowHandleId%"
-    }
-    Return
-  }
-
-  ; Else it's not already open, so launch it.
-  Run, wt
-}
-
-RunActivateOrSwitchTitleWeb(url, name)
+ToggleWeb(url, name)
 {
   ; Search for the webapp by title
   SetTitleMatchMode, 2
@@ -139,7 +109,37 @@ RunActivateOrSwitchTitleWeb(url, name)
     WinActivate, %name%
 }
 
-RunSpotify()
+ToggleTerminal()
+{
+  ; TODO: merge SwitchToWindowsTerminal with RunActiveteOrSwitchProcess
+  windowHandleId := WinExist("ahk_exe WindowsTerminal.exe")
+  windowExistsAlready := windowHandleId > 0
+
+  ; If the Windows Terminal is already open, determine if we should put it in focus or minimize it.
+  if (windowExistsAlready = true)
+  {
+    activeWindowHandleId := WinExist("A")
+    windowIsAlreadyActive := activeWindowHandleId == windowHandleId
+
+    if (windowIsAlreadyActive)
+    {
+      ; Minimize the window.
+      WinMinimize, "ahk_id %windowHandleId%"
+    }
+    else
+    {
+      ; Put the window in focus.
+      WinActivate, "ahk_id %windowHandleId%"
+      WinShow, "ahk_id %windowHandleId%"
+    }
+    Return
+  }
+
+  ; Else it's not already open, so launch it.
+  Run, wt
+}
+
+ToggleSpotify()
 {
   WinGet, spotifyHwnd, ID, ahk_exe spotify.exe
   if ( spotifyHwnd = "" )
@@ -160,63 +160,69 @@ RunSpotify()
 ; + - Shift
 ; # - Win key
 
-; Example for running a website
+; --------- Run webbite instances
 ^+#q:: ;Cronometer
-  RunActivateOrSwitchTitleWeb("https://cronometer.com/", "Cronometer")
+  ToggleWeb("https://cronometer.com/", "Cronometer")
 Return
 
 ; Launch Gmal
 ^+#g::
-  RunActivateOrSwitchTitleWeb("https://mail.google.com/mail/u/0/#inbox", " - Gmail")
+  ToggleWeb("https://mail.google.com/mail/u/0/#inbox", " - Gmail")
 Return
 
+; ---------- Toggle by using the process title
 ; Launching Firefox
 ^+#f:: ;Firefox
   ;Run C:\Program Files\Mozilla Firefox\firefox.exe
-  RunActivateOrSwitchTitle("C:\Program Files\Mozilla Firefox\firefox.exe", "Mozilla Firefox")
+  ToggleByTitle("C:\Program Files\Mozilla Firefox\firefox.exe", "Mozilla Firefox")
 Return
 
 ; Launching Double commander
-^+#d:: ;
-RunActivateOrSwitchTitle("C:\Program Files\Double Commander\doublecmd.exe", "Double Commander")
-Return
-
-; Launch Cron
-^+#c:: ;Cron
-  RunActivateOrSwitchProcess("C:\Users\ztome\AppData\Local\Programs\cron\Cron.exe", "Cron")
-Return
-
-; Launch Spotify
-^+#s:: ; Spotify
-  RunSpotify()
+^+#d::
+  ToggleByTitle("C:\Program Files\Double Commander\doublecmd.exe", "Double Commander")
 Return
 
 ; Launch VSCode
 ^+#v::
-  RunActivateOrSwitchTitle("C:\Users\ztome\AppData\Local\Programs\Microsoft VS Code\Code.exe", "Visual Studio Code")
-Return
-
-; Launch Chrome
-^+#w:: ; Chrome
-  RunActivateOrSwitchProcess("C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", "Google Chrome")
+  ToggleByTitle("C:\Users\ztome\AppData\Local\Programs\Microsoft VS Code\Code.exe", "Visual Studio Code")
 Return
 
 ; Launch WhatsApp
-^+#r:: ;
-RunActivateOrSwitchTitle("C:\Program Files\WindowsApps\5319275A.WhatsAppDesktop_2.2226.6.0_x64__cv1g1gvanyjgm\app\WhatsApp.exe", "WhatsApp")
-Return
-
-; Notion
-^+#a::
-  RunActivateOrSwitchProcess("C:\Users\ztome\AppData\Local\Programs\Notion\Notion.exe", "Notion")
-Return
-
-; Launch Terminal
-^+#t::SwitchToWindowsTerminal()
+^+#r::
+  ToggleByTitle("C:\Program Files\WindowsApps\5319275A.WhatsAppDesktop_2.2226.6.0_x64__cv1g1gvanyjgm\app\WhatsApp.exe", "WhatsApp")
 Return
 
 ; Process Explorer
 ^+Esc::
-  RunActivateOrSwitchTitle("C:\Program Files\WindowsApps\Microsoft.SysinternalsSuite_2022.7.0.0_x64__8wekyb3d8bbwe\Tools\procexp.exe", "Process Explorer")
+  ToggleByTitle("C:\Program Files\WindowsApps\Microsoft.SysinternalsSuite_2022.7.0.0_x64__8wekyb3d8bbwe\Tools\procexp.exe", "Process Explorer")
+Return
+
+; ----------- Toggle by using the process name
+
+; Launch Cron
+^+#c:: ;Cron
+  ToggleByProcess("C:\Users\ztome\AppData\Local\Programs\cron\Cron.exe", "Cron")
+Return
+
+; Launch Chrome
+^+#w:: ; Chrome
+  ToggleByProcess("C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", "Google Chrome")
+Return
+
+; Notion
+^+#a::
+  ToggleByProcess("C:\Users\ztome\AppData\Local\Programs\Notion\Notion.exe", "Notion")
+Return
+
+; --------------- Special cases
+
+; Launch Spotify
+^+#s:: ; Spotify
+  ToggleSpotify()
+Return
+
+; Launch Terminal
+^+#t::
+  ToggleTerminal()
 Return
 
