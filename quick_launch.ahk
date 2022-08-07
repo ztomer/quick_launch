@@ -198,7 +198,7 @@ Return
 
 ; Launch Chrome
 ^+#w:: ; Chrome
-  RunActivateOrSwitchTitle("C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", "Google Chrome")
+  RunActivateOrSwitchProcess("C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", "Google Chrome")
 Return
 
 ; Launch WhatsApp
