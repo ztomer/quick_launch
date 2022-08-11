@@ -156,6 +156,33 @@ ToggleSpotify()
   Return
 }
 
+prevTitle := ""
+prevX := 0
+prevY := 0
+FocusWindow()
+{
+  ; global prevTitle
+  ; global prevX
+  ; global prevY
+  ;PositionToggle = 1
+  WinGetTitle, ActiveWindowTitle, A
+  WinGetPos,,, Width, Height, %ActiveWindowTitle%
+
+  ; if ( %prevTitle% == %ActiveWindowTitle% )
+  ; {
+  ;   MsgBox, %prevTitle%
+  ;   WinMove, %ActiveWindowTitle%,, %prevX%, %prevY%
+  ;   prevX := Width
+  ;   prevY := Height
+  ;   Return
+  ; }
+  ; prevX := Width
+  ; prevY := Height
+  ; prevTitle := ActiveWindowTitle
+  TargetX := (A_ScreenWidth/2) - (Width/2)
+  TargetY := (A_ScreenHeight/2) - (Height/2)
+  WinMove, %ActiveWindowTitle%,, %TargetX%, %TargetY%
+}
 ; ^ - Control
 ; + - Shift
 ; # - Win key
@@ -189,7 +216,7 @@ Return
 
 ; Launch WhatsApp
 ^+#r::
-  ToggleByTitle("C:\Program Files\WindowsApps\5319275A.WhatsAppDesktop_2.2226.6.0_x64__cv1g1gvanyjgm\app\WhatsApp.exe", "WhatsApp")
+  ToggleByTitle("C:\Program Files\WindowsApps\5319275A.WhatsAppDesktop_2.2228.14.0_x64__cv1g1gvanyjgm\app\WhatsApp.exe", "WhatsApp")
 Return
 
 ; Process Explorer
@@ -197,16 +224,15 @@ Return
   ToggleByTitle("C:\Program Files\WindowsApps\Microsoft.SysinternalsSuite_2022.7.0.0_x64__8wekyb3d8bbwe\Tools\procexp.exe", "Process Explorer")
 Return
 
+; Launch Chrome
+^+#w:: ; Chrome
+  ToggleByTitle("C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", "Chrome")
+Return
 ; ----------- Toggle by using the process name
 
 ; Launch Cron
 ^+#c:: ;Cron
   ToggleByProcess("C:\Users\ztome\AppData\Local\Programs\cron\Cron.exe", "Cron")
-Return
-
-; Launch Chrome
-^+#w:: ; Chrome
-  ToggleByProcess("C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", "Google Chrome")
 Return
 
 ; Notion
@@ -224,5 +250,9 @@ Return
 ; Launch Terminal
 ^+#t::
   ToggleTerminal()
+Return
+
+^+#o::
+  FocusWindow()
 Return
 
