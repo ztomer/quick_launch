@@ -28,13 +28,17 @@ Public domain
 
 ## Q&A
 * Q: Why AutoHotKey?
+
   A: Please propose an alternative.
   
 * Q: What about window management?
+
   A: Powertoys FancyZones is good enough 
 
 * Q: It doesn't fit my workflow!
+
   A: Build your own then, it's public domain
   
 * Q: Your AHK code sucks!
+
   A: Patches welcome
