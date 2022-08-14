@@ -1,7 +1,7 @@
 # Quick launch
 
 ## Why?
-My workflow mostly consist of using the same applications over and over again. Hunting for the applications on the taskbar is bothersome and slows me down (and it's auto-hidden anyways)
+My workflow mostly consist of using the same applications over and over again. Hunting for the applications on the taskbar is bothersome and slows me down (the taskbar is auto-hidden anyways)
 
 ## How?
 Keyboard based application shortcuts.
