@@ -25,3 +25,16 @@ Public domain
 * To start the script on log-in, use the task scheduler, schedule a task using the AutoHotKey.exe binary, and add the full path + quick_launch.ahk as a parameter
 * There are five different launch functions since there's no unified way to get a consistent identifier for windows in Windows. This is sub-optimal, but at least works.
 * Hammerspoon for Mac is better. Alas.
+
+## Q&A
+* Q: Why AutoHotKey?
+  A: Please propose an alternative.
+  
+* Q: What about window management?
+  A: Powertoys FancyZones is good enough 
+
+* Q: It doesn't fit my workflow!
+  A: Build your own then, it's public domain
+  
+* Q: Your AHK code sucks!
+  A: Patches welcome
