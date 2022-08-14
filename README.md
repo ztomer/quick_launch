@@ -1,18 +1,23 @@
 # Quick launch
 
-Keyboard based application shortcuts.
-Assign a hot key to launch or open specific applications or websites, no need to remember if the application was already launched.
-Focus on tasks rather then window management.
+## Why?
+My workflow mostly consist of using the same applications over and over again. Hunting for their icon on the taskbar is bothersome and slows me down.
 
-Examples: 
-* Notion: to launch Notion, press Control+Shift+Win+A, Notion is launched and focused (if it was already running, the existing instance will be brought into focus). Pressing Control+Shift+Win+A again will minimize the Notion window. 
-* Gmail: to read email, press Control+Shift+Win+G. Gmail is launched in a window. Press Control+Shoft+Win+A again to minimize the window.
+## How?
+Keyboard based application shortcuts.
+
+Assign a hot key to launch or open a specific application or website. 
+Focus on tasks rather than the taskbar.
+
+## Examples
+* Notion (application): to launch Notion, press Control+Shift+Win+A, Notion is launched and focused (if it was already running, the existing instance will be brought into focus). Pressing Control+Shift+Win+A again will minimize the Notion window. 
+* Gmail (website): to read email, press Control+Shift+Win+G. Gmail is launched in a window. Press Control+Shoft+Win+A again to minimize the window.
 
 Uses AutoHotKey and copy-pastes from across the web.
 
 Public domain
 
-Notes:
+## Notes
 
 * Use quick_launch.ahk, the other file is for reference
 * There's no GUI, you'd probably want and need to edit the script for your own needs
