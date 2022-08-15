@@ -14,7 +14,7 @@ Focus on tasks rather than the taskbar.
 ## Examples
 
 * Notion (application): to launch Notion, press Control+Shift+Win+A, Notion is launched and focused (if it was already running, the existing instance will be brought into focus). Pressing Control+Shift+Win+A again will minimize the Notion window.
-* Gmail (website): to read email, press Control+Shift+Win+G. Gmail is launched in a window. Press Control+Shift+Win+A again to minimize the window.
+* Gmail (website): to read email, press Control+Shift+Win+G. Gmail is launched in a window. Press Control+Shift+Win+G again to minimize the window.
 
 Uses AutoHotKey and copy-pastes from across the web.
 
