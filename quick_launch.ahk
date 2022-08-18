@@ -221,7 +221,7 @@ Return
 
 ; Process Explorer
 ^+Esc::
-  ToggleByTitle("C:\Program Files\WindowsApps\Microsoft.SysinternalsSuite_2022.7.0.0_x64__8wekyb3d8bbwe\Tools\procexp.exe", "Process Explorer")
+  ToggleByTitle("C:\Program Files\WindowsApps\Microsoft.SysinternalsSuite_2022.8.0.0_x64__8wekyb3d8bbwe\Tools\procexp.exe", "Process Explorer")
 Return
 
 ; Launch Chrome
